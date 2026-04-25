@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>Screen OCR Vocabulary</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Screen OCR</h1>
+      <p class="subtitle">拖曳選取、即時翻譯、自動收藏</p>
+    </header>
+
+    <div id="api-warning" class="warning hidden">
+      尚未設定 Gemini API Key，請先開啟設定頁
+    </div>
+
+    <div class="shortcut-hint">
+      快捷鍵：<kbd id="shortcut-key">Ctrl+Shift+O</kbd>
+    </div>
+
+    <div class="buttons">
+      <button id="open-wordlist" class="btn btn-primary">
+        <span class="icon">📚</span>
+        <span>開啟單字列表</span>
+      </button>
+      <button id="open-settings" class="btn btn-secondary">
+        <span class="icon">⚙️</span>
+        <span>設定</span>
+      </button>
+    </div>
+
+    <footer>
+      <button id="start-ocr" class="btn-link">
+        在當前分頁啟動 OCR
+      </button>
+    </footer>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

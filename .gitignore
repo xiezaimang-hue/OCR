@@ -1,0 +1,34 @@
+# macOS
+.DS_Store
+._*
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python (used only for generating icons)
+__pycache__/
+*.py[cod]
+*.pyc
+.venv/
+venv/
+
+# Node (if ever introduced)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build / release artifacts
+*.zip
+*.crx
+dist/
+build/
+
+# Local secrets (should never be committed)
+.env
+.env.local
+secrets.json
