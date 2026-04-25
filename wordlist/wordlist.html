@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>單字列表 - Screen OCR Vocabulary</title>
+  <title>单词列表 - Screen OCR Vocabulary</title>
   <link rel="stylesheet" href="wordlist.css" />
 </head>
 <body>
@@ -10,12 +10,12 @@
     <div class="top-bar-inner">
       <div class="brand">
         <span class="logo">📚</span>
-        <h1>單字列表</h1>
+        <h1>单词列表</h1>
         <span class="count" id="count">0</span>
       </div>
       <div class="controls">
-        <input type="search" id="search" placeholder="搜尋單字或翻譯…" />
-        <button id="settings-btn" class="btn btn-secondary" title="設定">⚙️</button>
+        <input type="search" id="search" placeholder="搜索单词或翻译…" />
+        <button id="settings-btn" class="btn btn-secondary" title="设定">⚙️</button>
       </div>
     </div>
   </header>
@@ -23,8 +23,8 @@
   <main>
     <div id="empty-state" class="empty-state hidden">
       <div class="empty-icon">🔍</div>
-      <h2>還沒有任何單字</h2>
-      <p>在任何網頁上按 <kbd id="shortcut-display">Ctrl+Shift+O</kbd> 框選英文單字即可收藏。</p>
+      <h2>还没有任何单词</h2>
+      <p>在任何网页上按 <kbd id="shortcut-display">Ctrl+Shift+O</kbd> 框选英文单词即可收藏。</p>
     </div>
 
     <div id="grid" class="grid"></div>
@@ -32,11 +32,11 @@
 
   <div id="confirm-dialog" class="dialog-overlay hidden">
     <div class="dialog">
-      <h3>確認刪除</h3>
-      <p id="confirm-message">確定要刪除這個單字嗎？</p>
+      <h3>确认删除</h3>
+      <p id="confirm-message">确定要删除这个单词吗？</p>
       <div class="dialog-actions">
         <button id="confirm-cancel" class="btn btn-secondary">取消</button>
-        <button id="confirm-delete" class="btn btn-danger">刪除</button>
+        <button id="confirm-delete" class="btn btn-danger">删除</button>
       </div>
     </div>
   </div>

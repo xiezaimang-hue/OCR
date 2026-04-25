@@ -26,27 +26,27 @@ function escapeHtml(s) {
 function formatRelativeTime(ts) {
   const diff = Date.now() - ts;
   const sec = Math.floor(diff / 1000);
-  if (sec < 60) return '剛剛';
+  if (sec < 60) return '刚刚';
   const min = Math.floor(sec / 60);
-  if (min < 60) return `${min} 分鐘前`;
+  if (min < 60) return `${min} 分钟前`;
   const hr = Math.floor(min / 60);
-  if (hr < 24) return `${hr} 小時前`;
+  if (hr < 24) return `${hr} 小时前`;
   const day = Math.floor(hr / 24);
   if (day < 30) return `${day} 天前`;
-  return new Date(ts).toLocaleDateString('zh-TW');
+  return new Date(ts).toLocaleDateString('zh-CN');
 }
 
 function renderCard(w) {
   const pinned = w.pinned ? 'pinned' : '';
   const pinActive = w.pinned ? 'active' : '';
-  const pinTitle = w.pinned ? '取消置頂' : '置頂';
+  const pinTitle = w.pinned ? '取消置顶' : '置顶';
   return `
     <article class="card ${pinned}" data-id="${escapeHtml(w.id)}">
       <div class="card-header">
         <div class="card-word">${escapeHtml(w.word)}</div>
         <div class="card-actions">
           <button class="icon-btn ${pinActive}" data-action="pin" title="${pinTitle}">📌</button>
-          <button class="icon-btn" data-action="delete" title="刪除">🗑️</button>
+          <button class="icon-btn" data-action="delete" title="删除">🗑️</button>
         </div>
       </div>
       <div class="card-meta">
@@ -60,7 +60,7 @@ function renderCard(w) {
           ${w.exampleTranslation ? `<div class="example-zh">${escapeHtml(w.exampleTranslation)}</div>` : ''}
         </div>
       ` : ''}
-      <div class="timestamp">更新於 ${formatRelativeTime(w.updatedAt)}</div>
+      <div class="timestamp">更新于 ${formatRelativeTime(w.updatedAt)}</div>
     </article>
   `;
 }
@@ -89,7 +89,7 @@ function render() {
   emptyEl.classList.add('hidden');
 
   if (filtered.length === 0) {
-    gridEl.innerHTML = `<div class="empty-state" style="grid-column: 1/-1"><p>找不到符合的單字</p></div>`;
+    gridEl.innerHTML = `<div class="empty-state" style="grid-column: 1/-1"><p>找不到符合的单词</p></div>`;
     return;
   }
 
@@ -115,7 +115,7 @@ gridEl.addEventListener('click', async (e) => {
   } else if (action === 'delete') {
     const word = allWords.find((w) => w.id === id);
     pendingDeleteId = id;
-    confirmMessage.textContent = `確定要刪除「${word?.word || ''}」嗎？`;
+    confirmMessage.textContent = `确定要删除「${word?.word || ''}」吗？`;
     confirmDialog.classList.remove('hidden');
   }
 });

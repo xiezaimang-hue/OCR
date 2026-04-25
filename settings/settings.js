@@ -27,7 +27,7 @@ async function init() {
   if (!hasOption && model) {
     const opt = document.createElement('option');
     opt.value = model;
-    opt.textContent = `${model}（已儲存的舊選擇，可能已不可用）`;
+    opt.textContent = `${model}（已保存的旧选择，可能已不可用）`;
     modelSelect.appendChild(opt);
   }
   modelSelect.value = model;
@@ -50,7 +50,7 @@ saveBtn.addEventListener('click', async () => {
   const key = apiKeyInput.value.replace(/\s+/g, '').replace(/[​-‍﻿]/g, '');
   const model = modelSelect.value;
   await Promise.all([setApiKey(key), setModel(model)]);
-  showStatus('✓ 已儲存', 'success');
+  showStatus('✓ 已保存', 'success');
   setTimeout(hideStatus, 2000);
 });
 
@@ -58,21 +58,21 @@ testBtn.addEventListener('click', async () => {
   const key = apiKeyInput.value.replace(/\s+/g, '').replace(/[​-‍﻿]/g, '');
   const model = modelSelect.value;
   if (!key) {
-    showStatus('請先輸入 API Key', 'error');
+    showStatus('请先输入 API Key', 'error');
     return;
   }
 
   testBtn.disabled = true;
   saveBtn.disabled = true;
-  showStatus('測試中…', 'info');
+  showStatus('测试中…', 'info');
 
   try {
     const result = await testConnection(key, model);
     const usedNote = result.modelUsed && result.modelUsed !== model
-      ? `（原選 ${model} 配額不足，自動切換到 ${result.modelUsed}）`
+      ? `（原选 ${model} 配额不足，自动切换到 ${result.modelUsed}）`
       : '';
     showStatus(
-      `✓ 連線成功！測試結果：hello → ${result.translation}（${result.partOfSpeech}）${usedNote}`,
+      `✓ 连接成功！测试结果：hello → ${result.translation}（${result.partOfSpeech}）${usedNote}`,
       'success'
     );
   } catch (e) {
@@ -81,31 +81,31 @@ testBtn.addEventListener('click', async () => {
     let friendly;
     if (msg === 'INVALID_API_KEY') {
       friendly =
-        '✗ API Key 無效（401/403）。\n' +
-        '請確認：\n' +
-        '1. Key 是否完整貼上（前後沒有多餘空格）。\n' +
-        '2. Key 是從 https://aistudio.google.com/apikey 取得（不是 Google Cloud Console 的）。\n' +
-        '3. Key 對應的專案有啟用 Generative Language API（AI Studio 建立的會自動啟用）。\n' +
-        '4. 新建立的 Key 有時需要 1-2 分鐘才會生效。';
+        '✗ API Key 无效（401/403）。\n' +
+        '请确认：\n' +
+        '1. Key 是否完整贴上（前后没有多余空格）。\n' +
+        '2. Key 是从 https://aistudio.google.com/apikey 获取的（不是 Google Cloud Console 的）。\n' +
+        '3. Key 对应的项目已启用 Generative Language API（AI Studio 创建的会自动启用）。\n' +
+        '4. 新创建的 Key 有时需要 1-2 分钟才会生效。';
     } else if (msg === 'NETWORK_ERROR') {
-      friendly = '✗ 網路錯誤，請確認連線。';
+      friendly = '✗ 网络错误，请确认网络连接。';
     } else if (msg === 'MODEL_NOT_FOUND') {
       friendly =
-        '✗ 內建模型清單對這把 Key 全部不可用（404）。\n' +
-        '請點上方「🔄 偵測可用模型」，從你的 API Key 取回真正可用的模型清單再試。';
+        '✗ 内建模型清单对这把 Key 全部不可用（404）。\n' +
+        '请点上方「🔄 检测可用模型」，从你的 API Key 获取真正可用的模型清单再试。';
     } else if (isRateLimited) {
       friendly =
-        '✗ 此 API Key 在所有可用模型上都已達配額（HTTP 429）。\n' +
+        '✗ 此 API Key 在所有可用模型上都已达配额（HTTP 429）。\n' +
         '可能原因：\n' +
-        '1. 這把 Key 對應的 Google Cloud 專案今天的免費 RPD（每日請求數）已用完 → 請等 UTC 00:00 重置（台灣時間早上 8 點）。\n' +
-        '2. 短時間內請求太密集 → 等 1 分鐘再試。\n' +
-        '解決方式：到 https://aistudio.google.com/apikey 用「另一個 Google 帳號」或「另一個 Cloud 專案」新建一把 Key 替換。';
+        '1. 这把 Key 对应的 Google Cloud 项目今天的免费 RPD（每日请求数）已用完 → 请等 UTC 00:00 重置（台湾时间早上 8 点）。\n' +
+        '2. 短时间内请求太密集 → 等 1 分钟再试。\n' +
+        '解决方式：到 https://aistudio.google.com/apikey 用「另一个 Google 账号」或「另一个 Cloud 项目」新建一把 Key 替换。';
     } else if (msg === 'SERVER_BUSY') {
-      friendly = '✗ Gemini 伺服器忙碌（503），請稍後再試。';
+      friendly = '✗ Gemini 服务器忙碌（503），请稍后再试。';
     } else if (msg.startsWith('API_ERROR')) {
-      friendly = `✗ Google 回傳錯誤：\n${msg.replace(/^API_ERROR:/, '')}`;
+      friendly = `✗ Google 回传错误：\n${msg.replace(/^API_ERROR:/, '')}`;
     } else {
-      friendly = `✗ 測試失敗：${msg}`;
+      friendly = `✗ 测试失败：${msg}`;
     }
     showStatus(friendly, 'error');
   } finally {
@@ -122,11 +122,11 @@ document.getElementById('open-shortcuts').addEventListener('click', (e) => {
 function describeModel(name) {
   const lower = name.toLowerCase();
   const tags = [];
-  if (lower.includes('lite')) tags.push('輕量');
-  if (lower.includes('latest')) tags.push('最新版別名');
+  if (lower.includes('lite')) tags.push('轻量');
+  if (lower.includes('latest')) tags.push('最新版别名');
   if (lower.includes('pro')) tags.push('Pro');
   if (lower.includes('thinking')) tags.push('Thinking');
-  if (lower.includes('exp')) tags.push('實驗');
+  if (lower.includes('exp')) tags.push('实验');
   if (lower.includes('preview')) tags.push('Preview');
   return tags.length ? `（${tags.join('・')}）` : '';
 }
@@ -147,19 +147,19 @@ function rankModel(name) {
 detectBtn.addEventListener('click', async () => {
   const key = apiKeyInput.value.replace(/\s+/g, '').replace(/[​-‍﻿]/g, '');
   if (!key) {
-    showStatus('請先輸入 API Key', 'error');
+    showStatus('请先输入 API Key', 'error');
     return;
   }
 
   detectBtn.disabled = true;
   testBtn.disabled = true;
   saveBtn.disabled = true;
-  showStatus('🔄 正在從 Google 取得可用模型清單…', 'info');
+  showStatus('🔄 正在从 Google 获取可用模型清单…', 'info');
 
   try {
     const all = await listModels(key);
     if (!all.length) {
-      showStatus('✗ 沒有取到任何 Gemini 模型，請確認 Key 是否正確。', 'error');
+      showStatus('✗ 没有取到任何 Gemini 模型，请确认 Key 是否正确。', 'error');
       return;
     }
 
@@ -182,15 +182,15 @@ detectBtn.addEventListener('click', async () => {
     }
 
     showStatus(
-      `✓ 偵測完成，共找到 ${sorted.length} 個可用模型，已預選 ${modelSelect.value}。\n別忘了按「儲存」。`,
+      `✓ 检测完成，共找到 ${sorted.length} 个可用模型，已预选 ${modelSelect.value}。\n别忘了按「保存」。`,
       'success'
     );
   } catch (e) {
     const msg = e.message || String(e);
     if (msg === 'INVALID_API_KEY') {
-      showStatus('✗ API Key 無效，無法取得模型清單。請確認 Key 是否正確。', 'error');
+      showStatus('✗ API Key 无效，无法获取模型清单。请确认 Key 是否正确。', 'error');
     } else {
-      showStatus(`✗ 取得模型清單失敗：${msg}`, 'error');
+      showStatus(`✗ 获取模型清单失败：${msg}`, 'error');
     }
   } finally {
     detectBtn.disabled = false;

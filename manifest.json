@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Screen OCR Vocabulary",
   "version": "0.1.0",
-  "description": "拖曳畫面英文單字，即時翻譯並收藏到單字卡（Gemini + Tesseract.js）",
+  "description": "拖动画面英文单词，即时翻译并收藏到生词卡（Gemini + Tesseract.js）",
   "permissions": [
     "activeTab",
     "contextMenus",
@@ -44,7 +44,7 @@
         "default": "Ctrl+Shift+O",
         "mac": "Command+Shift+O"
       },
-      "description": "啟用 OCR 選取"
+      "description": "启用 OCR 选择"
     }
   },
   "web_accessible_resources": [

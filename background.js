@@ -7,7 +7,7 @@ const CONTEXT_MENU_ID = 'screen-ocr-activate';
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: CONTEXT_MENU_ID,
-    title: '啟用 OCR 選取',
+    title: '启用 OCR 选择',
     contexts: ['page', 'image', 'selection', 'frame'],
   });
 });
@@ -73,7 +73,7 @@ async function startSelection(tabId) {
           type: 'basic',
           iconUrl: 'icons/icon128.png',
           title: 'Screen OCR',
-          message: '此頁面不允許擴充功能執行（例如 chrome:// 或擴充頁面），請切換到一般網頁再試。',
+          message: '此页面不允许扩展程序执行（例如 chrome:// 或扩展页面），请切换到一般网页再试。',
         });
       } else {
         console.error('[OCR] inject failed', err);

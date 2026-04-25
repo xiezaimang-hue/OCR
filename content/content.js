@@ -53,7 +53,7 @@
 
     hintEl = document.createElement('div');
     hintEl.className = 'ocr-hint';
-    hintEl.textContent = '拖曳滑鼠框選英文單字  ·  按 ESC 取消';
+    hintEl.textContent = '拖动鼠标框选英文单词  ·  按 ESC 取消';
     overlay.appendChild(hintEl);
 
     document.documentElement.appendChild(overlay);
@@ -111,7 +111,7 @@
 
     const loadingTip = document.createElement('div');
     loadingTip.className = 'ocr-loading-tip';
-    loadingTip.textContent = '🔍 辨識中…';
+    loadingTip.textContent = '🔍 辨识中…';
     loadingTip.style.left = rect.x + 'px';
     loadingTip.style.top = rect.y + rect.h + 8 + 'px';
     overlay.appendChild(loadingTip);
@@ -147,7 +147,7 @@
         <div class="ocr-tip-body ocr-tip-error">
           <div class="ocr-tip-title">⚠️ ${escapeHtml(errorMessage(data.error))}</div>
           ${data.detail ? `<div class="ocr-tip-hint">${escapeHtml(data.detail)}</div>` : ''}
-          <button class="ocr-tip-close">關閉</button>
+          <button class="ocr-tip-close">关闭</button>
         </div>
       `;
       document.documentElement.appendChild(tip);
@@ -169,16 +169,16 @@
           <div class="ocr-tip-original">${escapeHtml(text)}</div>
         </div>
         <div class="ocr-tip-section">
-          <div class="ocr-tip-label">翻譯</div>
+          <div class="ocr-tip-label">翻译</div>
           <div class="ocr-tip-translation">${escapeHtml(translation)}</div>
         </div>
         <div class="ocr-tip-section">
-          <div class="ocr-tip-label">點選單字加入單字本</div>
+          <div class="ocr-tip-label">点菜单词加入生词本</div>
           <div class="ocr-tip-chips"></div>
         </div>
         <div class="ocr-tip-footer">
-          <span class="ocr-tip-hint-small">點按詞彙→自動翻譯並收藏</span>
-          <button class="ocr-tip-close" title="關閉">×</button>
+          <span class="ocr-tip-hint-small">点击词汇→自动翻译并收藏</span>
+          <button class="ocr-tip-close" title="关闭">×</button>
         </div>
         <div class="ocr-tip-detail" style="display:none;"></div>
       </div>
@@ -191,7 +191,7 @@
       chip.dataset.word = item.word;
       chip.dataset.state = item.alreadySaved ? 'saved' : 'idle';
       chip.innerHTML = `<span class="ocr-chip-text">${escapeHtml(item.word)}</span><span class="ocr-chip-mark">${item.alreadySaved ? '✓' : '+'}</span>`;
-      chip.title = item.alreadySaved ? '已在單字本（點按更新）' : '點按加入單字本';
+      chip.title = item.alreadySaved ? '已在生词本（点击更新）' : '点击加入生词本';
       chipsBox.appendChild(chip);
     }
 
@@ -266,13 +266,13 @@
         chip.dataset.state = 'failed';
         if (mark) mark.textContent = '!';
         const errCode = response?.error || chrome.runtime.lastError?.message || 'UNKNOWN';
-        chip.title = '加入失敗：' + errorMessage(errCode);
+        chip.title = '加入失败：' + errorMessage(errCode);
         showDetail(tip, { error: errCode, word });
         setTimeout(() => {
           chip.classList.remove('failed');
           chip.dataset.state = 'idle';
           if (mark) mark.textContent = '+';
-          chip.title = '點按加入單字本';
+          chip.title = '点击加入生词本';
         }, 3500);
         return;
       }
@@ -298,7 +298,7 @@
     const pos = data.partOfSpeech || '';
     const example = data.example || '';
     const exampleTrans = data.exampleTranslation || '';
-    const status = data.isDuplicate ? '↻ 已更新' : '✓ 已加入單字本';
+    const status = data.isDuplicate ? '↻ 已更新' : '✓ 已加入生词本';
     box.innerHTML = `
       <div class="ocr-tip-detail-head">
         <span class="ocr-tip-detail-word">${escapeHtml(word)}</span>
@@ -321,31 +321,31 @@
   function errorMessage(code) {
     switch (code) {
       case 'MISSING_API_KEY':
-        return '請先到設定頁輸入 Gemini API Key';
+        return '请先到设定页输入 Gemini API Key';
       case 'INVALID_API_KEY':
-        return 'API Key 無效，請確認設定';
+        return 'API Key 无效，请确认设定';
       case 'NETWORK_ERROR':
-        return '網路錯誤';
+        return '网络错误';
       case 'RATE_LIMITED':
-        return '已達 Gemini 免費配額，請稍候 1 分鐘或換模型';
+        return '已达 Gemini 免费配额，请稍候 1 分钟或换模型';
       case 'SERVER_BUSY':
-        return 'Gemini 伺服器忙碌，請稍後再試';
+        return 'Gemini 服务器忙碌，请稍后再试';
       case 'NOT_A_WORD':
-        return '這不是一個有效的英文單字';
+        return '这不是一个有效的英文单词';
       case 'OCR_NO_WORD':
-        return 'OCR 沒有辨識到英文單字';
+        return 'OCR 没有辨识到英文单词';
       case 'OCR_FAILED':
-        return 'OCR 辨識失敗';
+        return 'OCR 辨识失败';
       case 'MODEL_NOT_FOUND':
-        return '所有模型都不可用（可能地區或 API 未啟用）';
+        return '所有模型都不可用（可能地区或 API 未启用）';
       case 'EMPTY_RESPONSE':
       case 'PARSE_ERROR':
-        return 'Gemini 回應解析失敗';
+        return 'Gemini 回应解析失败';
       default:
         if (typeof code === 'string' && code.startsWith('API_ERROR')) {
-          return 'Gemini API 錯誤';
+          return 'Gemini API 错误';
         }
-        return '未知錯誤';
+        return '未知错误';
     }
   }
 
